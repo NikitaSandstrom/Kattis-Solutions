@@ -1,3 +1,8 @@
+/*  Author:         Nikita Sandstrom
+ *  Date Edited:    18/10/2021
+ *  Filename:       fruitbasket.js
+ */
+
 //Requirements//
 //var counter = 0;
 const readline = require('readline').createInterface({
