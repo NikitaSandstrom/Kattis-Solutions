@@ -5,19 +5,48 @@
 */ 
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-int main() {
-    int ksWeight, objectsInPlay;
-    cin >> ksWeight >> objectsInPlay;
+vector<vector<int>> totalList;
 
-    int itemsOut[objectsInPlay][2];
-    //Change whole thing to be while(cin) as we have to take a lot of test cases in.
-    for(int i = 0; i < objectsInPlay; i++) {
-        int itemValue, itemWeight;
-        cin >> itemValue >> itemWeight;
-        itemsOut[i][0] = itemValue;
-        itemsOut[i][1] = itemWeight;
+int main() {
+    int valueL, valueR;
+    while(cin >> valueL >> valueR) {
+        cin >> valueL >> valueR;
+        vector<int> nextRow;
+        nextRow.push_back(valueL);
+        nextRow.push_back(valueR);
+
+        totalList.push_back(nextRow);
+    }
+
+    while(!totalList.empty()) {
+        //Change the Vector into a list, should reduce some *memory* or timing issues if they arise
+        vector<vector<int>> testCaseList;
+        int testCaseWeight = totalList[0][0];
+        int testCaseSize = totalList[0][1];
+        testCaseList.erase(testCaseList.begin());
+
+
+        for (int i = 0; i < testCaseSize; i++) {
+            vector<int> testCaseRow;
+            testCaseRow.push_back(totalList[0][0]);
+            testCaseRow.push_back(totalList[0][1]);
+
+            testCaseList.push_back(testCaseRow);
+            testCaseList.erase(testCaseList.begin());
+        }
+
+        knapsack(testCaseWeight, testCaseList);
+    }
+}
+
+
+
+int knapsack(int maxWeight, vector<vector<int>> knapsackList) {
+    if (knapsackList.size() == 0 || maxWeight == 0) {
+        return 0;
     }
 }
