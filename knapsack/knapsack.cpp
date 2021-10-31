@@ -11,6 +11,24 @@ using namespace std;
 
 vector<vector<int>> totalList;
 
+int knapSack(int maxWeight, int knapsackListValue[], int knapsackListWeight[], int size) {
+    int table[size + 1][maxWeight + 1];
+
+    for (int i = 0; i <= size; i++) {
+        for (int w = 0; w <= maxWeight; w++) {
+            if (i == 0 || w == 0) {
+                table[i][w] = 0;
+            } else if (knapsackListWeight[i - 1] > w) {
+                table[i][w] = table[i - 1][w];
+            } else {
+                table[i][w] = max(knapsackListValue[i] + table[i - 1][w - knapsackListWeight[i]], table[i - 1][w]);
+            }
+        }
+    }
+
+    return table[size][maxWeight];
+}
+
 int main() {
     int valueL, valueR;
     while(cin >> valueL >> valueR) {
@@ -23,30 +41,23 @@ int main() {
     }
 
     while(!totalList.empty()) {
-        //Change the Vector into a list, should reduce some *memory* or timing issues if they arise
-        vector<vector<int>> testCaseList;
-        int testCaseWeight = totalList[0][0];
+        int testCaseMaxWeight = totalList[0][0];
         int testCaseSize = totalList[0][1];
-        testCaseList.erase(testCaseList.begin());
+        totalList.erase(totalList.begin());
 
+        int testCaseValue[testCaseSize];
+        int testCaseWeight[testCaseSize];
 
         for (int i = 0; i < testCaseSize; i++) {
-            vector<int> testCaseRow;
-            testCaseRow.push_back(totalList[0][0]);
-            testCaseRow.push_back(totalList[0][1]);
+            testCaseValue[i] = totalList[0][0];
+            testCaseWeight[i] = totalList[0][1];
 
-            testCaseList.push_back(testCaseRow);
-            testCaseList.erase(testCaseList.begin());
+            totalList.erase(totalList.begin());
         }
 
-        knapsack(testCaseWeight, testCaseList);
+        cout << knapSack(testCaseMaxWeight, testCaseValue, testCaseWeight, testCaseSize);
     }
 }
 
 
 
-int knapsack(int maxWeight, vector<vector<int>> knapsackList) {
-    if (knapsackList.size() == 0 || maxWeight == 0) {
-        return 0;
-    }
-}
