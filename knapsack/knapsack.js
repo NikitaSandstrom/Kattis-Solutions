@@ -6,7 +6,7 @@ const readline = require('readline').createInterface({
 var indexResults = new Array();
 
 async function main () {
-    for(var a = 0; a < 2; a++) {
+    for(var a = 0; a < 30; a++) {
         var inputInVal = await input();
         inputInVal = inputInVal.split(" ").map(Number);
 
