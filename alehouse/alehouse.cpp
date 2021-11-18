@@ -13,12 +13,12 @@ using namespace std;
 int main () {
     // Starting Variables
     int numOfGuests, lengthOfStay;
-    vector<pair<int,int>> timings;
+    vector<pair<int,char>> timings;
     cin >> numOfGuests >> lengthOfStay;
     int result = 0;
     int friends = 0;
 
-    // Gather input and push 0 if it is the in time, and 1 if it
+    // Gather input and push i (in) if it is the in time, and o (out) if it
     // is the out time
     for (int i = 0; i < numOfGuests; i++) {
         int in, out;
@@ -27,8 +27,8 @@ int main () {
         *  the arrays to find as many people you can meet
         *  in the period of time
         */
-        timings.push_back(make_pair(in - lengthOfStay, 0));
-        timings.push_back(make_pair(out, 1));
+        timings.push_back(make_pair(in - lengthOfStay, 'i'));
+        timings.push_back(make_pair(out, 'o'));
     }
 
     // Sort the list out (first value major order)
@@ -37,7 +37,7 @@ int main () {
     // Iterates through the itinerary of people who enter and leave at times
     for (int i = 0; i < numOfGuests * 2; i++) {
         //If a person enters the bar
-        if (timings[i].second == 0) {
+        if (timings[i].second == 'i') {
             friends++;
         } else { // if they leave the bar
             friends--;
