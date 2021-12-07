@@ -1,55 +1,59 @@
 /*  Author:             Nikita Sandstrom
-*   Last Updated:       05/12/2021
+*   Last Updated:       06/12/2021
 *   File Name:          dominoes2.cpp
 *   Kattis Attempted:   Dominoes 2
 */ 
 
 #include <iostream>
 #include <vector>
+#include <list>
 
 using namespace std;
-int finalAnswer;
 
-void dfs(int z, vector<pair<int,int>>& vertexPairs, vector<int>& verticesSeen) {
-    //if vertex already seen, return
-    //else, mark that vertex as seen and add 1
+int finalAnswer;
+vector<vector<int>> adj;
+vector<int> vertexTable;
+
+void dfs(int z) {
+    //Mark vertex as seen and add 1
+    vertexTable[z-1] = 1;
+    finalAnswer++;
     
     //put in for loop (multiple branches off z)
     //if line exists from z to y, perform dfs
+    for(auto i : adj[z]) {
+        cout << i;
+        if (vertexTable[z - 1] == 0)
+            dfs(i);
+    }
 }
 
 
 int main() {
-    int n, m, l;
+    int n, m, l, v, w, vertex;
     int numTestCases;
 
     cin >> numTestCases;
 
     while (cin >> n >> m >> l) {
-        //Starting Variables
+        //Starting Variables & cleanup
         finalAnswer = 0;
-        vector<pair<int, int>> totalList;
-        vector<int> vertexTable(n, 0);
-        vector<int> startingVertices;
+        adj.resize(n);
+        vertexTable.resize(n, 0);
 
-        //Gather Domino Pairs
+
+        //Gather vertex Pairs
         for (int i = 0; i < m; i++) {
-            pair<int, int> dominoHit;
-            cin >> dominoHit.first >> dominoHit.second;
-            totalList.push_back(dominoHit);
+            cin >> v >> w;
+            adj[v].push_back(w);
         }
 
-        //Gathering Vertices to start knocking down        
-        for (int i = 0; i < l; i++) { //Could be optimized further and combined with for loop below
-            int vertex;
+
+        //Gathering Vertices to start marking down        
+        for (int i = 0; i < l; i++) {
             cin >> vertex;
-            startingVertices.push_back(vertex);
-        }
-
-        //Depth First Search
-        //Takes starting vertex, totalList, and performs DFS along directed graph
-        for (int i = 0; i < startingVertices.size; i++) {
-            finalAnswer += dfs(startingVertices[i], totalList, vertexTable);
+            if (!vertexTable[vertex-1])
+                dfs(vertex);
         }
 
         //Output
