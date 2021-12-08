@@ -1,5 +1,5 @@
 /*  Author:             Nikita Sandstrom
-*   Last Updated:       06/12/2021
+*   Last Updated:       07/12/2021
 *   File Name:          dominoes2.cpp
 *   Kattis Attempted:   Dominoes 2
 */ 
@@ -10,54 +10,60 @@
 
 using namespace std;
 
-int finalAnswer;
-vector<vector<int>> adj;
-vector<int> vertexTable;
+int dfs(int z, vector<vector<int>>& adj, vector<int>& vertexSeen, int counter) {
+    //mark vertex as seen
+    vertexSeen[z] = 1;
+    counter++;
 
-void dfs(int z) {
-    //Mark vertex as seen and add 1
-    vertexTable[z-1] = 1;
-    finalAnswer++;
-    
-    //put in for loop (multiple branches off z)
-    //if line exists from z to y, perform dfs
-    for(auto i : adj[z]) {
-        cout << i;
-        if (vertexTable[z - 1] == 0)
-            dfs(i);
+    //create iterator type to go through each value in the adjaceny list
+    vector<int>::iterator i;
+    //traverse through each value of z in adjacency list
+    for (i = adj[z].begin(); i != adj[z].end(); i++) {
+        //if i pointing to vertexSeen not seen, do dfs
+        if (vertexSeen[*i] != 1) {
+            counter = dfs(*i, adj, vertexSeen, counter);
+        }
     }
+    return counter;
 }
 
-
 int main() {
-    int n, m, l, v, w, vertex;
-    int numTestCases;
+    //Starting Variables
+    int n, m, l, v, w;
+    int vertex, numTestCases, finalAnswer;
+
+    vector<vector<int>> adj;
+    vector<int> vertexTable;
 
     cin >> numTestCases;
 
-    while (cin >> n >> m >> l) {
-        //Starting Variables & cleanup
-        finalAnswer = 0;
-        adj.resize(n);
-        vertexTable.resize(n, 0);
+    for (int i = 0; i < numTestCases; i++) {
+        cin >> n >> m >> l;
 
+        //Vector Cleanup through each test case
+        finalAnswer = 0;
+        adj.clear();
+        adj.resize(n + 1);
+        vertexTable.clear();
+        vertexTable.resize(n + 1, 0);
 
         //Gather vertex Pairs
-        for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
             cin >> v >> w;
             adj[v].push_back(w);
         }
 
-
-        //Gathering Vertices to start marking down        
-        for (int i = 0; i < l; i++) {
+        //conduct dfs through each marked vertex
+        for (int j = 0; j < l; j++) {
             cin >> vertex;
-            if (!vertexTable[vertex-1])
-                dfs(vertex);
+            if (vertexTable[vertex] != 1) {
+                finalAnswer = dfs(vertex, adj, vertexTable, finalAnswer);
+            }
         }
 
         //Output
         cout << finalAnswer;
         cout << endl;
+
     }
 }
