@@ -38,7 +38,7 @@ void knapSackIndices(vector<vector<int>>& knapsackTable, int n, int W, vector<in
         //Gather the index most optimal, check back one, as well as checking up.
         //Search method is in essence a diagonal search.
         knapSackIndices(knapsackTable, n-1, W-objPairs[n].second, indexResults, objPairs);
-        //sends the index to vector
+        //sends the index to vector 
         indexResults.push_back(n-1);
     }
 }
