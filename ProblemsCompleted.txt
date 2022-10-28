@@ -1,5 +1,12 @@
-3/50
+10/50
 
 architecture.cpp
 basicProgramming1.cpp
 turtleMaster.cpp
+acMinions.cpp
+dvd.py
+da-sort.py
+birdsOnWire.py
+stockbroker.py
+iHateNumber9.py
+arthimetic.py
