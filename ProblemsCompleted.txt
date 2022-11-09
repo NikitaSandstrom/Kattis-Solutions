@@ -1,4 +1,4 @@
-10/50
+14/50
 
 architecture.cpp
 basicProgramming1.cpp
@@ -10,3 +10,8 @@ birdsOnWire.py
 stockbroker.py
 iHateNumber9.py
 arthimetic.py
+
+divisibleSubsequences.py
+jugHard.py
+ones.cpp
+lockedTreasure.py
