@@ -1,4 +1,4 @@
-14/50
+16/50
 
 architecture.cpp
 basicProgramming1.cpp
@@ -15,3 +15,5 @@ divisibleSubsequences.py
 jugHard.py
 ones.cpp
 lockedTreasure.py
+catalanNumbers.py
+catalansquares.py
